@@ -5,6 +5,9 @@ using UnityEngine;
 public class CubeController : MonoBehaviour
 {
     // TODO : color(enum) , height(float)
+    public enum CubeColor { RED, GREEN, BLUE, YELLOW, PURPLE }
+    public CubeColor color;
+    public float height;
     
     // Start is called before the first frame update
     void Start()

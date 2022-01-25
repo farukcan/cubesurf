@@ -9,8 +9,9 @@ public class Pool : MonoBehaviour
 
     // publics
     public string poolName;
-    public GameObject prefab;
+    public GameObject[] prefabs;
     public int amount = 10;
+    public bool expandable = true;
     public bool defaultActive = false;
 
     // internals
@@ -38,7 +39,7 @@ public class Pool : MonoBehaviour
         }
         for (int i = 0; i < amount; i++)
         {
-            objects[i] = Instantiate(prefab, transform);
+            objects[i] = Instantiate(prefabs[i%prefabs.Length], transform);
             objects[i].SetActive(defaultActive);
         }
     }
@@ -60,7 +61,26 @@ public class Pool : MonoBehaviour
     public GameObject GetPooledObject()
     {
         int i = lastIndex;
-        lastIndex = (i + 1) % amount;
+        if(expandable && objects[i].activeSelf){
+            int j = amount;
+            do {
+                j--;
+                lastIndex = (lastIndex + 1) % amount;
+            }while(objects[lastIndex].activeSelf && j>0);
+            if(j==0){
+                lastIndex = amount;
+                List<GameObject> list = new List<GameObject>();
+                list.AddRange(objects);
+                GameObject additional = Instantiate(prefabs[amount%prefabs.Length], transform);
+                additional.SetActive(false);
+                list.Add(additional);
+                objects = list.ToArray();
+                amount++;
+            }
+            i=lastIndex;
+        }else{
+            lastIndex = (i + 1) % amount;
+        }
         return objects[i];
     }
 

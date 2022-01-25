@@ -11,6 +11,7 @@ public class CameraController : MonoBehaviour
     public bool autoOffset = true;
     [HideIf("autoOffset")]
     public Vector3 offset;
+    public float lerping = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -22,9 +23,9 @@ public class CameraController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        transform.position = Vector3.Lerp(transform.position,target.position - offset,Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position,target.position - offset,lerping * Time.deltaTime);
         transform.LookAt(lookAt);
     }
 }

@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class CharacterController : MonoBehaviour
+public class SurfingCharacterController : MonoBehaviour
 {
     // TODO: Modify!
-    public static CharacterController Instance; 
-    [ReadOnly]
+    public static SurfingCharacterController Instance; 
     public float speed = .01f;
 
     public enum CharacterAnimation {
@@ -15,7 +14,6 @@ public class CharacterController : MonoBehaviour
     }
 
     public CharacterAnimation currentAnimation = CharacterAnimation.Walking;
-    private UnityEngine.CharacterController controller;
 
     public Animator animator;
 
@@ -27,26 +25,12 @@ public class CharacterController : MonoBehaviour
         Instance = this;
     }
 
-    void Start()
-    {
-        controller = GetComponent<UnityEngine.CharacterController>();
-    }
-
-
-    private void OnControllerColliderHit(ControllerColliderHit hit) {
-        // SetAnimation(CharacterAnimation.Hit);
-    }
-
     // Update is called once per frame
     void Update()
     {
         if(currentAnimation==CharacterAnimation.Walking){
-            controller.Move(Vector3.forward * speed);
-            controller.Move(Vector3.right * speed * InputController.instance.delta.x / 10);
-        }
-        controller.Move(Physics.gravity * Time.deltaTime);
-        if(!controller.isGrounded){
-            SetAnimation(CharacterAnimation.Falling);
+            transform.Translate(Vector3.forward * speed);
+            transform.Translate(Vector3.right * speed * InputController.instance.delta.x / 10);
         }
     }
 
