@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class Pool : MonoBehaviour
@@ -58,8 +59,23 @@ public class Pool : MonoBehaviour
         pools.Remove(poolName);
     }
 
+    [Button("Clear Children")]
+    public void ClearChildren(){
+        while(transform.childCount > 0){
+            DestroyImmediate(transform.GetChild(0).gameObject);
+        }
+    }
+
     public GameObject GetPooledObject()
     {
+        #if UNITY_EDITOR
+        if(UnityEditor.EditorApplication.isPlaying == false){
+            return UnityEditor.PrefabUtility.InstantiatePrefab(
+                prefabs[Mathf.FloorToInt(amount*Random.value)%prefabs.Length],
+                transform
+            ) as GameObject;
+        }
+        #endif
         int i = lastIndex;
         if(expandable && objects[i].activeSelf){
             int j = amount;
@@ -86,6 +102,22 @@ public class Pool : MonoBehaviour
 
     public static Pool GetPool(string name)
     {
+        #if UNITY_EDITOR
+        if(pools.ContainsKey(name)){
+            return pools[name];
+        }
+        Pool[] _pools = GameObject.FindObjectsOfType<Pool>();
+        foreach (Pool pool in _pools)
+        {
+            if (pool.poolName == name)
+            {
+                return pool;
+            }
+        }
+        Debug.LogError("Pool not found : " + name);
+        return null;
+        #else
         return pools[name];
+        #endif
     }
 }
