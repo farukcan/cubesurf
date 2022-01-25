@@ -80,12 +80,14 @@ public class InfiniteLinePlacer : MonoBehaviour
             try
             {
                 GameObject go = activeObjects[index];
-                go.SetActive(false);
-                #if UNITY_EDITOR
-                    if(UnityEditor.EditorApplication.isPlaying == false){
-                        DestroyImmediate(go);
-                    }
-                #endif
+                if(!go.CompareTag("DontDisplace")){
+                    go.SetActive(false);
+                    #if UNITY_EDITOR
+                        if(UnityEditor.EditorApplication.isPlaying == false){
+                            DestroyImmediate(go);
+                        }
+                    #endif
+                }
             }
             catch (System.Exception e)
             {

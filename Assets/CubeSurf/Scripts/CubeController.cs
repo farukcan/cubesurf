@@ -2,22 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider))]
 public class CubeController : MonoBehaviour
 {
-    // TODO : color(enum) , height(float)
     public enum CubeColor { RED, GREEN, BLUE, YELLOW, PURPLE }
     public CubeColor color;
     public float height;
     
-    // Start is called before the first frame update
-    void Start()
+    // on enable set tag "Cube"
+    private void OnEnable()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        gameObject.tag = "Cube";
     }
 }

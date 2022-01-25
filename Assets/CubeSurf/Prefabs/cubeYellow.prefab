@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 4981891873209200043}
   - component: {fileID: 7117880982545029473}
   - component: {fileID: 6742906150226333531}
+  - component: {fileID: -2658784697322669728}
+  - component: {fileID: 6828773611818688669}
   m_Layer: 0
   m_Name: cubeYellow
   m_TagString: Untagged
@@ -93,4 +95,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: 3
-  height: 0
+  height: 0.042
+--- !u!65 &-2658784697322669728
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8775043398910703796}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.01, y: 0.01, z: 0.01}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &6828773611818688669
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8775043398910703796}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
