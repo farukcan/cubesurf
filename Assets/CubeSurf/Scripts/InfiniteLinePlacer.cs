@@ -45,7 +45,7 @@ public class InfiniteLinePlacer : MonoBehaviour
         // closest index        
         int index = GetClosestIndex(closestPoint);
         // draw closest index spheres
-        for (int i = Mathf.FloorToInt(viewRange / spacegap * -1); i < viewRange / spacegap; i++)
+        for (int i = Mathf.FloorToInt(viewRange / spacegap * -1); i <= Mathf.CeilToInt(viewRange / spacegap); i++)
         {
             Gizmos.color = RandomizerBool(index+i) ? Color.blue : Color.grey;
             Gizmos.DrawSphere(GetPositionOfIndex(index+i), dotRadius);
@@ -77,13 +77,20 @@ public class InfiniteLinePlacer : MonoBehaviour
 
     private void Displace(int index){
         if(activeObjects.ContainsKey(index)){
-            GameObject go = activeObjects[index];
-            go.SetActive(false);
-            #if UNITY_EDITOR
-                if(UnityEditor.EditorApplication.isPlaying == false){
-                    DestroyImmediate(go);
-                }
-            #endif
+            try
+            {
+                GameObject go = activeObjects[index];
+                go.SetActive(false);
+                #if UNITY_EDITOR
+                    if(UnityEditor.EditorApplication.isPlaying == false){
+                        DestroyImmediate(go);
+                    }
+                #endif
+            }
+            catch (System.Exception e)
+            {
+                Debug.Log(e);
+            }
             activeObjects.Remove(index);
         }
     }
@@ -92,7 +99,7 @@ public class InfiniteLinePlacer : MonoBehaviour
     public void RefleshIndexList(){
         var currentList = new List<int>();
         int index = GetClosestIndex(ClosestPointOnInfiniteLine());
-        for (int i = Mathf.FloorToInt(viewRange / spacegap * -1); i < viewRange / spacegap; i++)
+        for (int i = Mathf.FloorToInt(viewRange / spacegap * -1); i <= Mathf.CeilToInt(viewRange / spacegap); i++)
         {
             if (RandomizerBool(index + i))
             {
@@ -133,9 +140,9 @@ public class InfiniteLinePlacer : MonoBehaviour
     }
 
     private Vector3 RandomizerOnSphere(int index){
-        float x = randomizeX ? RandomizerFloat(index*2) : 0;
-        float y = randomizeY ? RandomizerFloat(index*3) : 0;
-        float z = randomizeZ ? RandomizerFloat(index*5) : 0;
+        float x = randomizeX ? RandomizerFloat(index*2)*2f-1f : 0;
+        float y = randomizeY ? RandomizerFloat(index*3)*2f-1f : 0;
+        float z = randomizeZ ? RandomizerFloat(index*5)*2f-1f : 0;
         return (new Vector3(x, y, z)).normalized;
     }
 
@@ -174,6 +181,7 @@ public class InfiniteLinePlacer : MonoBehaviour
         // if origin is not null then
         if (origin != null)
         {
+            ClearActiveIndexList();
             // set preOriginPosition to origin position
             preOriginPosition = origin.position;
             // set originMovementAmount to origin position
@@ -191,14 +199,14 @@ public class InfiniteLinePlacer : MonoBehaviour
             originMovementAmount += Vector3.Distance(origin.position, preOriginPosition);
             // set preOriginPosition to origin position
             preOriginPosition = origin.position;
-        }
-        // if originMovementAmount is greater than spacegap then
-        if (originMovementAmount >= spacegap)
-        {
-            // reflesh index list
-            RefleshIndexList();
-            // set originMovementAmount to zero
-            originMovementAmount = 0;
+            // if originMovementAmount is greater than spacegap then
+            if (originMovementAmount >= spacegap)
+            {
+                // reflesh index list
+                RefleshIndexList();
+                // set originMovementAmount to zero
+                originMovementAmount = 0;
+            }
         }
     }
 }

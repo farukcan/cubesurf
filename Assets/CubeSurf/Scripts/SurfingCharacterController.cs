@@ -8,6 +8,7 @@ public class SurfingCharacterController : MonoBehaviour
     // TODO: Modify!
     public static SurfingCharacterController Instance; 
     public float speed = .01f;
+    public float controlSpeed = .005f;
 
     public enum CharacterAnimation {
         Walking,Falling
@@ -25,12 +26,11 @@ public class SurfingCharacterController : MonoBehaviour
         Instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if(currentAnimation==CharacterAnimation.Walking){
             transform.Translate(Vector3.forward * speed);
-            transform.Translate(Vector3.right * speed * InputController.instance.delta.x / 10);
+            transform.Translate(Vector3.right * controlSpeed * InputController.instance.delta.x / 10);
         }
     }
 

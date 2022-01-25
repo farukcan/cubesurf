@@ -22,6 +22,7 @@ public class Pool : MonoBehaviour
     private void Awake()
     {
         RegisterPool();
+        ClearChildren();
         CreateInstances();
     }
 
@@ -102,10 +103,10 @@ public class Pool : MonoBehaviour
 
     public static Pool GetPool(string name)
     {
-        #if UNITY_EDITOR
         if(pools.ContainsKey(name)){
             return pools[name];
         }
+        #if UNITY_EDITOR
         Pool[] _pools = GameObject.FindObjectsOfType<Pool>();
         foreach (Pool pool in _pools)
         {
@@ -115,9 +116,7 @@ public class Pool : MonoBehaviour
             }
         }
         Debug.LogError("Pool not found : " + name);
-        return null;
-        #else
-        return pools[name];
         #endif
+        return null;
     }
 }
