@@ -6,6 +6,7 @@ TagManager:
   tags:
   - DontDisplace
   - Cube
+  - Wall
   layers:
   - Default
   - TransparentFX

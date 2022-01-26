@@ -5,10 +5,15 @@ using UnityEngine;
 
 public class SurfingCharacterController : MonoBehaviour
 {
-    // TODO: Modify!
     public static SurfingCharacterController Instance; 
     public float speed = .01f;
     public float controlSpeed = .005f;
+    public float maxControlMovementAmount = .01f;
+
+    public Camera cam;
+
+    public float maxFOV = 90f;
+    private float defaultFOV;
 
     [ReadOnly]
     public List<CubeController> cubes = new List<CubeController>();
@@ -22,6 +27,8 @@ public class SurfingCharacterController : MonoBehaviour
     public Animator animator;
 
     private float defaultY;
+    private Vector3 lastPosition;
+    private Rigidbody rigidBody;
 
     /// <summary>
     /// Awake is called when the script instance is being loaded.
@@ -29,20 +36,33 @@ public class SurfingCharacterController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        rigidBody =  GetComponent<Rigidbody>();
         defaultY = transform.position.y;
+        defaultFOV = cam.fieldOfView;
     }
-
     private void FixedUpdate()
     {
         if(currentAnimation==CharacterAnimation.Walking){
             transform.Translate(Vector3.forward * speed);
-            transform.Translate(Vector3.right * controlSpeed * InputController.instance.delta.x / 10);
+            float delta = InputController.instance.delta.x;
+            var controlVector = Vector3.right * controlSpeed * delta;
+            if(controlVector.sqrMagnitude > maxControlMovementAmount*maxControlMovementAmount){
+                controlVector = controlVector.normalized * maxControlMovementAmount;
+                Debug.Log("Control Vector Mag:" + controlVector.sqrMagnitude);
+            }
+            transform.Translate(controlVector);
         }
     }
 
     private void Update(){
         Movement();
         Rule();
+    }
+
+    private void LateUpdate(){
+        // Lerp camera fieldOfView
+        float target = Mathf.Lerp(defaultFOV, maxFOV , 1f/30f*cubes.Count);
+        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, target, Time.deltaTime);
     }
 
     private void Movement(){
@@ -62,6 +82,7 @@ public class SurfingCharacterController : MonoBehaviour
                 variableHeight-=cube.height/2;
             }
         }
+        lastPosition = transform.position;
     }
 
     private void Rule(){
@@ -80,8 +101,14 @@ public class SurfingCharacterController : MonoBehaviour
                 foreach (var color in colors){
                     var cubeToRemove = cubes.Find(cube => cube.color == color);
                     cubes.Remove(cubeToRemove);
-                    cubeToRemove.gameObject.SetActive(false);
+                    Run.Lerp(.9f,t=>{
+                        cubeToRemove.transform.localScale = Vector3.Lerp(cubeToRemove.transform.localScale,Vector3.zero,t);
+                    });
+                    Run.After(1f,()=>{
+                        cubeToRemove.gameObject.SetActive(false);
+                    });
                 }
+                Haptic.MediumTaptic();
             }
         }
     }
@@ -94,6 +121,18 @@ public class SurfingCharacterController : MonoBehaviour
             other.gameObject.tag = "DontDisplace";
             // add cube to cubes list
             cubes.Add(other.gameObject.GetComponent<CubeController>());
+            Haptic.LightTaptic();
+        }
+        // when collider with Wall blink the wall
+        if(other.gameObject.tag=="Wall"){
+            other.gameObject.GetComponent<WallController>().Blink();
+        }
+    }
+    private void OnTriggerStay(Collider other) {
+        // if other is "Wall" reverse InputController delta
+        if(other.gameObject.tag=="Wall"){
+            transform.position = lastPosition;
+            InputController.instance.delta = Vector3.zero;
         }
     }
 }

@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Pool : MonoBehaviour
 {
-    // statics
-    public static Dictionary<string, Pool> pools = new Dictionary<string, Pool>();
+    // statics TODO: 'Pools'
+    public static Dictionary<string, Pool> Pools = new Dictionary<string, Pool>();
 
     // publics
     public string poolName;
@@ -48,16 +48,16 @@ public class Pool : MonoBehaviour
 
     private void RegisterPool()
     {
-        if (pools.ContainsKey(poolName))
+        if (Pools.ContainsKey(poolName))
         {
             Debug.Log("Overriding pool : " + poolName);
         }
-        pools[poolName] = this;
+        Pools[poolName] = this;
     }
 
     private void UnregisterPool()
     {
-        pools.Remove(poolName);
+        Pools.Remove(poolName);
     }
 
     [Button("Clear Children")]
@@ -103,8 +103,8 @@ public class Pool : MonoBehaviour
 
     public static Pool GetPool(string name)
     {
-        if(pools.ContainsKey(name)){
-            return pools[name];
+        if(Pools.ContainsKey(name)){
+            return Pools[name];
         }
         #if UNITY_EDITOR
         Pool[] _pools = GameObject.FindObjectsOfType<Pool>();

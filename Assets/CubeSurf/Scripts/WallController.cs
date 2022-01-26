@@ -4,17 +4,32 @@ using UnityEngine;
 
 public class WallController : MonoBehaviour
 {
-    // TODO : When CharacterController collide it, animate
-
-    // Start is called before the first frame update
-    void Start()
+    private MeshRenderer meshRenderer;
+    private Run blinker;
+    private void Start()
     {
-        
+        // set tag "Wall"
+        gameObject.tag = "Wall";
+        meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderer.material.color = new Color(
+            meshRenderer.material.color.r,
+            meshRenderer.material.color.g,
+            meshRenderer.material.color.b
+            ,0f
+        );
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public void Blink(){
+        if(blinker == null){
+            blinker = Run.Lerp(1,t=>{
+                // set material color alpha to t
+                meshRenderer.material.color = new Color(
+                    meshRenderer.material.color.r,
+                    meshRenderer.material.color.g,
+                    meshRenderer.material.color.b
+                    ,1f-t
+                );
+            });
+        }
+    } 
 }

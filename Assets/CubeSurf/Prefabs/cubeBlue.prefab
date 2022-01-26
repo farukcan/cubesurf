@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6248072274992709227}
   - component: {fileID: 171351567943347295}
   - component: {fileID: 383926798971025895}
+  - component: {fileID: 1717946500960118879}
   m_Layer: 0
   m_Name: cubeBlue
   m_TagString: Untagged
@@ -125,3 +126,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1717946500960118879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4002871878568615588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1de52a112f4419498244ffd22ec6739, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 1
+  delayForTZero: 0.2

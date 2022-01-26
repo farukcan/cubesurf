@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3324030}
   - component: {fileID: 2393106}
   - component: {fileID: 64298869167028770}
+  - component: {fileID: 5744034911131087456}
   m_Layer: 0
   m_Name: SM_Env_Mountains_01
   m_TagString: Untagged
@@ -94,3 +95,17 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 4799c0c6ea75641468c5720156a4af19, type: 3}
+--- !u!114 &5744034911131087456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1de52a112f4419498244ffd22ec6739, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 5
+  delayForTZero: 0.1

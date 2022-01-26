@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class InfiniteLinePlacer : MonoBehaviour
 {
-    // TODO: check for bugs if exists
     public float spacegap = 1;
     public float randomizationScale = 0;
     public bool randomizeX = true;

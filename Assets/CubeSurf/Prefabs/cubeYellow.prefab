@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6742906150226333531}
   - component: {fileID: -2658784697322669728}
   - component: {fileID: 6828773611818688669}
+  - component: {fileID: 730581655985329669}
   m_Layer: 0
   m_Name: cubeYellow
   m_TagString: Untagged
@@ -125,3 +126,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &730581655985329669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8775043398910703796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1de52a112f4419498244ffd22ec6739, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 1
+  delayForTZero: 0.2
