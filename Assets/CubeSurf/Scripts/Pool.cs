@@ -1,11 +1,20 @@
-﻿using System.Collections;
+﻿// Author : github.com/farukcan
+// Pooling Optimization System For Unity3D
+// Requires: OdinInspector (But you can remove odin codes if you don't use it)
+// Usage : Pool.GetPool("poolName");
+// Usage : Pool.GetPool("poolName").GetPoolObject();
+// Note: You can also use it in editor edit mode
+// Spec: use expandable=true for increase amount of objects
+//          when there is no enought object in pool
+// Spec: Pooled Objects are defaulty not active (Check: defaultActive)
+
+using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class Pool : MonoBehaviour
 {
-    // statics TODO: 'Pools'
     public static Dictionary<string, Pool> Pools = new Dictionary<string, Pool>();
 
     // publics

@@ -1,4 +1,14 @@
-﻿using System.Collections;
+﻿// Author: github/farukcan
+// Requires: Pool.cs ( https://gist.github.com/farukcan/3a317afc2737822e29bbb18f919f4381 )
+// Requires: OdinInspector (But you can remove odin codes if you don't use it)
+// Note: You can see place points and infinite line on unity editor
+// Spec: Change 'seed' to change randomness
+// Spec: set randomizationScale for place object to little bit random place
+// Spec: randomizeX,Y,Z for randomization axies
+// Spec: 'probility' for object placing ratio
+// Spec: set 'origin' to you camera or your character (for auto place) 
+
+using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
