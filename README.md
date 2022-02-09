@@ -5,6 +5,8 @@ Infinite Stack Running Game
 
 Unity 2019.4.23f1 LTS
 
+Buy Sirenix Odin Inspector or delete it. Thanks.
+
 # Case
 
 Global Champions Unity Test 
